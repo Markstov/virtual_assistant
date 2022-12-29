@@ -20,6 +20,9 @@ class DBConnection:
         app_path = self.cursor.fetchone()[0] 
         return app_path
 
+    def del_app(self, app_name):
+        self.cursor.execute(f"DELETE FROM applications WHERE Name={app_name}")
+
 class Assistant:
     
     def __init__(self):
@@ -51,6 +54,7 @@ class Assistant:
     def show_apps(self):
         self.cursor.execute("SELECT * FROM applications")
         print(self.cursor.fetchall())
+
 
     def exec_command(self, command:str):
         command_list = command.split()

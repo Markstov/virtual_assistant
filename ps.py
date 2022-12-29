@@ -7,6 +7,7 @@ import winapps
 import pyautogui
 import sqlite3
 from wind_manage import WindowMgr
+import logging
 
 
 class DBConnection:
@@ -18,6 +19,7 @@ class DBConnection:
     def get_app_path(self, app_name):
         self.cursor.execute(f"SELECT app_path FROM applications WHERE app_name LIKE '%{app_name}%'")
         app_path = self.cursor.fetchone()[0] 
+        logging.info(f"App path {app_path}")
         return app_path
 
     def del_app(self, app_name):
@@ -32,10 +34,12 @@ class Assistant:
 
     def minimize_winds(self):
         pyautogui.hotkey('win','d')
+        logging.info(f"Minimize apps")
         time.sleep(1)
 
     def set_wind_foreground(self, app_name):
         self.w.find_window_wildcard(f".*{app_name}.*")
+        logging.info(f"Set foreground {app_name}")
         self.w.set_foreground()
         
     def open_app(self, app_name):

@@ -9,6 +9,17 @@ import sqlite3
 from wind_manage import WindowMgr
 
 
+class DBConnection:
+
+    def __init__(self, db_name):
+        self.conn = sqlite3.connect(db_name)
+        self.cursor = self.conn.cursor()
+
+    def get_app_path(self, app_name):
+        self.cursor.execute(f"SELECT app_path FROM applications WHERE app_name LIKE '%{app_name}%'")
+        app_path = self.cursor.fetchone()[0] 
+        return app_path
+
 class Assistant:
     
     def __init__(self):
